@@ -3,21 +3,29 @@ import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./components/Login";
 import Home from "./components/Home";
-import Project from "./components/project/project";
-import Team from "./components/team/Team"
+import Project from "./components/project/Project";
+import Team from "./components/team/Team";
 import Dashboard from "./components/Dashboard";
+import UsersList from "./components/users/UsersList";
+import { Suspense } from "react";
+import SideBar from "./components/sideBar/SideBar";
+import Layout from "./layouts/Layout";
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-
-        <Route path="/login" element={<Login />} />
-        <Route path="/projects" element={<Project />} />
-        <Route path="/team" element={<Team />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-      </Routes>
+      <Suspense fallback="Loading...">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route  path="/dashboard" element={<Layout />}>
+            <Route index path="projects" element={<Project />} />
+            <Route path="team" element={<Team />} />
+            <Route path="users" element={<UsersList />} />
+          </Route>
+        </Routes>
+      </Suspense>
+      {/* </SideBar> */}
     </BrowserRouter>
   );
 }
