@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { fetchWrapper } from "../../_helper/fetchWrapper";
 import { ErrorMessageHandler } from "../../_helper/_methods";
 
@@ -9,7 +9,7 @@ function Project() {
 
   const navigate = useNavigate();
   const openProject = (project) => {
-    navigate(`/projects/${project.id}`);
+    navigate(`${project.id}`);
   };
 
   useEffect(() => {
@@ -37,8 +37,9 @@ function Project() {
           <span className="absolute inset-y-0 left-0 flex items-center pl-2">
             <AiOutlineSearch fontSize={24} className="mb-2 text-indigo-400" />
           </span>
+
           <input
-            className="block w-full py-3 pr-3 bg-white border rounded-md shadow-sm placeholder:italic placeholder:text-slate-400 border-slate-300 pl-9 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
+            className="block w-full py-3 pr-3 bg-white border border-indigo-300 rounded-md shadow-sm placeholder:italic placeholder:text-slate-400 pl-9 focus:outline-none focus:border-indigo-300 focus:ring-indigo-300 focus:ring-1 sm:text-sm"
             placeholder="Search for project..."
             type="text"
             name="search"
