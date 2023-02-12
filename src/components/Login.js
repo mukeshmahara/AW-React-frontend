@@ -4,7 +4,7 @@ import { redirect, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import {fetchWrapper} from "../_helper/fetchWrapper";
+import { fetchWrapper } from "../_helper/fetchWrapper";
 import { ErrorMessageHandler } from "../_helper/_methods";
 
 function Login() {
@@ -21,20 +21,21 @@ function Login() {
   const onSubmit = async (data) => {
     console.log("data", data);
 
-    let  formData = {auth: {
-      email: data.email,
-      password: data.password
-    }} 
+    let formData = {
+      auth: {
+        email: data.email,
+        password: data.password,
+      },
+    };
 
     try {
-      let res = await fetchWrapper.post('auth/signin/', formData);
-      
-      toast.success("login successful")
-      navigate('/dashboard')
+      let res = await fetchWrapper.post("auth/signin/", formData);
+
+      toast.success("login successful", { position: "bottom-left" });
+      navigate("/dashboard");
     } catch (error) {
       ErrorMessageHandler(error);
     }
-
   };
 
   return (
@@ -95,7 +96,6 @@ function Login() {
               />
             </div>
           </div>
-          <ToastContainer autoClose={2000} />
 
           <div class="flex items-center justify-between">
             <div class="flex items-center">
