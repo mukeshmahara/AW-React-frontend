@@ -1,13 +1,22 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { NavLink, useNavigate } from "react-router-dom";
+import { userLogout } from "../../_redux/slices/user";
 import sidebarData from "./sidebarData";
 
 function SideBar() {
   const [active, setActive] = useState("Dashboard");
-
+  const navigate = useNavigate();
+  
   const handleClick = (item) => {
     setActive(item.name);
   };
+
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    dispatch(userLogout(navigate));
+  };
+
   return (
     <div className="shadow-lg ">
       <div className="flex items-center mb-4">
@@ -38,6 +47,14 @@ function SideBar() {
             </NavLink>
           );
         })}
+        <div className="my-5 text-center">
+          <button
+            className="bg-red-500 rounded-pill button "
+            onClick={handleLogout}
+          >
+            logout
+          </button>
+        </div>
       </div>
     </div>
   );
