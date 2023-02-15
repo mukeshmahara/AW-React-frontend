@@ -50,16 +50,29 @@ git clone https://github.com/mukeshmahara/AW-React-frontend.git
 
 ```
 
-2. Create your own branch
+3. Start your development Server
+
+```sh
+
+yarn start
+
+```
+
+4. Create your own branch
 
 ```sh
 
 git checkout -b your_branch_name
 
 ```
-3. Work in the issue listed
+5. Work in the issue listed
 
-4. Create a merge request for the associated issue with details description about the merge
+6. Create a merge request for the associated issue with details description about the merge
+
+
+
+
+
 
 
 
