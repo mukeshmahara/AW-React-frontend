@@ -26,9 +26,7 @@ const {
 } = projectSlice.actions
 
 
-export const projectSelector = (state)=>state.projects;
-
-// export the reducers
+// export the slice reducers
 const projectReducer = projectSlice.reducer;
 
 export default projectReducer;
@@ -37,7 +35,6 @@ export default projectReducer;
 export const fetchProjects = (url) =>async(dispatch)=>{
   try {
     const response = await fetchWrapper.get(url);
-    console.log("helo",getProjects, response.data.length)
     dispatch(getProjects({ projects: response.data, totalCount: response.data.length}))
     
   } catch (error) {
