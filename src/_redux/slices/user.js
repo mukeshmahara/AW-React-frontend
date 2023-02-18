@@ -5,8 +5,8 @@ import { ErrorMessageHandler } from "../../_helper/_methods";
 
 export const initialState = {
   loading: false,
-  user: {},
-  isLoggedin: jwtCheck() ? true : false,
+  user: null,
+  isLoggedin: jwtCheck() ? true: false,
 };
 
 // A user slice
@@ -50,18 +50,16 @@ export const userLogin = (credentials, navigate) => async (dispatch) => {
   try {
     let response = await fetchWrapper.post("auth/signin/", credentials);
     setToken(response.data.attributes.token, null, null);
-    dispatch(setUser({ user: response.data.attributes }));
-    dispatch(setUserLogin({ user: response.data.attributes }));
-    navigate("/dashboard");
+    dispatch(setUserLogin({ isLoggedin: true }));
+    dispatch(setUser({ data: response.data.attributes }));
+    navigate("/admin");
   } catch (error) {
     ErrorMessageHandler(error);
   }
 };
 
 export const userLogout = (navigate) => async (dispatch) => {
-  localStorage.removeItem("jwt_token");
-  localStorage.removeItem("admin_userRefresh");
-  localStorage.removeItem("admin_role");
+  localStorage.removeItem("token");
   dispatch(setUserLogout({ isLoggedin: false }));
   dispatch(setUser({ user: null }));
 

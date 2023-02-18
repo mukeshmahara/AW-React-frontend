@@ -1,18 +1,23 @@
 export function jwtCheck() {
-  let user;
+  let token;
 
   try {
-    user = JSON.parse(localStorage.getItem('jwt_token'));
+    token = JSON.parse(localStorage.getItem("token"));
   } catch (error) {
-    user = null;
+    token = null;
   }
-  if (user && user.token) {
-    return user.token;
+  console.log(token, "token");
+  
+  if (token) {
+    return token;
   } else {
     return false;
   }
 }
 
 export const setToken = (accessToken, refreshToken, role) => {
-  localStorage.setItem('jwt_token', JSON.stringify(accessToken));
+  localStorage.setItem("token", JSON.stringify(accessToken));
+  
+  // localStorage.setItem("role", JSON.stringify(role));
+  // localStorage.setItem('userRefresh', JSON.stringify(refreshToken));
 };
