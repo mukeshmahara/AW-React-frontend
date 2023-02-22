@@ -1,9 +1,14 @@
 import React from "react";
-import { FaSignInAlt } from "react-icons/fa";
+import { FaHome, FaSignInAlt } from "react-icons/fa";
 import { IoMdCreate } from "react-icons/io";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 function _header() {
+  const isLoggedIn = useSelector((state) => state.users.isLoggedin);
+
+  // const isLoggedIn = useSelector((state) => state.users.isLoggedIn);
+  console.log("Stateus", isLoggedIn);
   return (
     <div className="px-6 pt-6 lg:px-8">
       <nav className="flex items-center justify-between" aria-label="Global">
@@ -57,27 +62,44 @@ function _header() {
             Team
           </Link>
 
-          <Link to={"#"} className="text-sm font-semibold leading-6 text-gray-900">
+          <Link
+            to={"#"}
+            className="text-sm font-semibold leading-6 text-gray-900"
+          >
             Marketplace
           </Link>
 
-          <Link to={"#"} className="text-sm font-semibold leading-6 text-gray-900">
+          <Link
+            to={"#"}
+            className="text-sm font-semibold leading-6 text-gray-900"
+          >
             Company
           </Link>
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <Link
-            to={"/login"}
-            className="p-2 mx-5 text-sm font-semibold leading-6 text-gray-900 border rounded"
-          >
-            sign in <FaSignInAlt className="inline" />{" "}
-          </Link>
-          <Link
-            to={"/sign up"}
-            className="p-2 text-sm font-semibold leading-6 border rounded bg-indigo-50 text-transparent-100"
-          >
-            sign up <IoMdCreate className="inline" />
-          </Link>
+          {isLoggedIn ? (
+            <Link
+              to={"admin"}
+              className="p-2 mx-5 text-sm font-semibold leading-6 text-gray-900 border rounded hover:bg-green-50"
+            >
+              dashboard <FaHome className="inline" />
+            </Link>
+          ) : (
+            <>
+              <Link
+                to={"/login"}
+                className="p-2 mx-5 text-sm font-semibold leading-6 text-gray-900 border rounded"
+              >
+                sign in <FaSignInAlt className="inline" />{" "}
+              </Link>
+              <Link
+                to={"/sign up"}
+                className="p-2 text-sm font-semibold leading-6 border rounded bg-indigo-50 text-transparent-100"
+              >
+                sign up <IoMdCreate className="inline" />
+              </Link>
+            </>
+          )}
         </div>
       </nav>
     </div>
