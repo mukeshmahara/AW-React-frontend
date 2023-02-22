@@ -6,7 +6,6 @@ export function jwtCheck() {
   } catch (error) {
     token = null;
   }
-  console.log(token, "token");
   
   if (token) {
     return token;
