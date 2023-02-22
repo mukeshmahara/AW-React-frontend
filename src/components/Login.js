@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { ErrorMessageHandler } from "../_helper/_methods";
@@ -9,47 +9,48 @@ import { userLogin } from "../_redux/slices/user";
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const message = useSelector((state) => state?.users?.logginError?.error);
+  const [loginError, setLoginError] = useState("");
   const {
     register,
     handleSubmit,
     setValue,
     clearErrors,
+    setError,
     formState: { errors },
   } = useForm({ mode: "onBlur", defaultValues: {} });
 
   const handleLogin = async (data) => {
-    console.log("data", data);
-
+    setLoginError(message);
     let formData = {
       auth: {
         email: data.email,
         password: data.password,
       },
     };
-
-    try {
-      dispatch(userLogin(formData, navigate));
-    } catch (error) {
-      ErrorMessageHandler(error);
-    }
+    dispatch(userLogin(formData, navigate));
+  };
+  const handleChange = () => {
+    setLoginError("");
   };
 
   return (
-    <div className="flex items-center justify-center min-h-full px-4 py-12 sm:px-6 lg:px-8">
-      <div className="w-full max-w-md space-y-8">
+    <div className="flex items-center justify-center min-h-full px-4 py-12 border sm:px-6 lg:px-8">
+      <div className="w-full max-w-md p-5 space-y-8 border rounded shadow-lg">
         <div>
           <img
-            className="w-auto h-32 mx-auto"
+            className="h-32 mx-auto border rounded-full shadow-lg "
             src="logo_transparent.png"
             alt="MK Technology"
           />
+
           <h2 className="mt-6 text-3xl font-bold tracking-tight text-center text-gray-900">
             Sign in to your account
           </h2>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit(handleLogin)}>
           <input type="hidden" name="remember" value="true" />
-          <div className="-space-y-px rounded-md shadow-sm">
+          <div className="-space-y-px rounded-md shadow-sm ">
             <div>
               <label htmlFor="email-address" className="sr-only">
                 Email address
@@ -60,15 +61,17 @@ function Login() {
                 type="email"
                 autoComplete="email"
                 {...register("email", { required: "Please enter your email." })}
-                required
+                // required
+                onChange={handleChange}
                 className="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none rounded-t-md focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                 placeholder="Email address"
               />
             </div>
-            <div>
+            <div className="my-3">
               <label htmlFor="password" className="sr-only">
                 Password
               </label>
+
               <input
                 id="password"
                 name="password"
@@ -77,12 +80,17 @@ function Login() {
                 {...register("password", {
                   required: "Please enter your password.",
                 })}
-                required
+                onChange={handleChange}
+                // required
                 className="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none rounded-b-md focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                 placeholder="Password"
               />
             </div>
           </div>
+
+          <p className="text-red-500 duration-300 ease-in fade-in-error">
+            {loginError}
+          </p>
 
           <div className="flex items-center justify-between">
             <div className="flex items-center">
@@ -116,7 +124,6 @@ function Login() {
               className="relative flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-500 border border-transparent rounded-md group hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >
               <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                {/* <!-- Heroicon name: mini/lock-closed --> */}
                 <svg
                   className="w-5 h-5 text-indigo-500 group-hover:text-indigo-400"
                   xmlns="http://www.w3.org/2000/svg"
@@ -135,9 +142,9 @@ function Login() {
             </button>
           </div>
         </form>
-        <div class="inline-flex items-center justify-center w-full">
-          <hr class="w-full  my-4 bg-gray-200  rounded dark:bg-gray-700" />
-          <div class="absolute px-4 -translate-x-1/2 bg-white left-1/2 dark:bg-gray-900">
+        <div className="inline-flex items-center justify-center w-full">
+          <hr className="w-full my-4 bg-gray-200 rounded dark:bg-gray-700" />
+          <div className="absolute px-4 -translate-x-1/2 bg-white left-1/2 dark:bg-gray-900">
             Or
           </div>
         </div>
@@ -146,12 +153,9 @@ function Login() {
             className="flex items-center justify-center text-lg"
             role="button"
             aria-disabled="false"
-            tabindex="0"
+            tabIndex="0"
           >
-            <svg
-              viewBox="0 0 20 20"
-              className="h-5 mx-3 text-center "
-            >
+            <svg viewBox="0 0 20 20" className="h-5 mx-3 text-center ">
               <g>
                 <path
                   d="M19.9996 10.2297C19.9996 9.54995 19.9434 8.8665 19.8234 8.19775H10.2002V12.0486H15.711C15.4823 13.2905 14.7475 14.3892 13.6716 15.0873V17.586H16.9593C18.89 15.8443 19.9996 13.2722 19.9996 10.2297Z"
