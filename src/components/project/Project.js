@@ -1,5 +1,8 @@
 import React, { useEffect } from "react";
-import { AiOutlinePlus, AiOutlineSearch } from "react-icons/ai";
+import {
+  AiFillCopyrightCircle,
+  AiOutlinePlus,
+} from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { fetchWrapper } from "../../_helper/fetchWrapper";
@@ -7,6 +10,7 @@ import { ErrorMessageHandler } from "../../_helper/_methods";
 import { fetchProjects } from "../../_redux/slices/project";
 import SearchBox from "../Reusables/SearchBox";
 import Title from "../Reusables/Title";
+import ProjectSkeleton from "./skeleton/ProjectSkeleton";
 
 function Project() {
   const dispatch = useDispatch();
@@ -33,21 +37,11 @@ function Project() {
     <div className="">
       <div className="flex justify-between my-4">
         <div className="flex ">
-          <p className="mx-4 mb-2 text-5xl text-indigo-400">Projects</p>
-          <label className="relative block">
-            <span className="sr-only">Search</span>
-            <span className="absolute inset-y-0 left-0 flex items-center pl-2">
-              <AiOutlineSearch fontSize={24} className="mb-2 text-indigo-400" />
-            </span>
-
-            <input
-              className="py-3 pr-3 bg-white border border-indigo-300 rounded-md shadow-sm placeholder:italic placeholder:text-slate-400 pl-9 focus:outline-none focus:border-indigo-300 focus:ring-indigo-300 focus:ring-1 sm:text-sm"
-              placeholder="Search for project..."
-              type="text"
-              name="search"
-              onChange={searchProject}
-            />
-          </label>
+          <Title name="Projects" />
+          <SearchBox
+            placeholder="Search for project..."
+            handleSearch={searchProject}
+          />
         </div>
 
         <div className="">
@@ -62,6 +56,10 @@ function Project() {
 
       <hr />
 
+      {/* {
+        !projects && <ProjectSkeleton />
+      } */}
+
       {Array.isArray(projects)
         ? projects.map((item) => {
             <>{item.name}</>;
@@ -72,6 +70,9 @@ function Project() {
                 onClick={() => openProject(item)}
               >
                 <div className="my-4 ">
+                  <div className="flex justify-between mb-3 text-4xl font-extrabold text-center bg-black rounded text-green-50">
+                    {item.attributes.title} <AiFillCopyrightCircle />
+                  </div>
                   <img
                     src={
                       "https://tailwindui.com/img/component-images/dark-project-app-screenshot.png" ||
