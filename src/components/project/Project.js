@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { fetchWrapper } from "../../_helper/fetchWrapper";
 import { ErrorMessageHandler } from "../../_helper/_methods";
 import { fetchProjects } from "../../_redux/slices/project";
+import SearchBox from "../Reusables/SearchBox";
+import Title from "../Reusables/Title";
 
 function Project() {
   const dispatch = useDispatch();
