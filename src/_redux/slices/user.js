@@ -6,7 +6,8 @@ import { ErrorMessageHandler } from "../../_helper/_methods";
 export const initialState = {
   loading: false,
   user: null,
-  isLoggedin: jwtCheck() ? true: false,
+  logginError: null,
+  isLoggedin: jwtCheck() ? true : false,
 };
 
 // A user slice
@@ -20,6 +21,9 @@ const usersSlice = createSlice({
     setUserLogin: (state, action) => {
       state.isLoggedin = true;
       state.user = action.payload;
+    },
+    setUserLoginError: (state,action)=>{
+      state.logginError = action.payload;
     },
     setUserLogout: (state) => {
       state.isLoggedin = false;
@@ -35,7 +39,7 @@ const usersSlice = createSlice({
 });
 
 // Actions generated from the slice
-const { setUser, setUserLogin, setUserLogout, startLoading, stopLoading } =
+const { setUser, setUserLogin,setUserLoginError, setUserLogout, startLoading, stopLoading } =
   usersSlice.actions;
 
 // export user selector to get the slice in any component
@@ -54,7 +58,8 @@ export const userLogin = (credentials, navigate) => async (dispatch) => {
     dispatch(setUser({ data: response.data.attributes }));
     navigate("/admin");
   } catch (error) {
-    ErrorMessageHandler(error);
+    // ErrorMessageHandler(error);
+    dispatch(setUserLoginError(error))
   }
 };
 
