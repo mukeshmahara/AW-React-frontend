@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { ErrorMessageHandler } from "../_helper/_methods";
 import { userLogin } from "../_redux/slices/user";
@@ -38,11 +38,13 @@ function Login() {
     <div className="flex items-center justify-center min-h-full px-4 py-12 border sm:px-6 lg:px-8">
       <div className="w-full max-w-md p-5 space-y-8 border rounded shadow-lg">
         <div>
-          <img
-            className="h-32 mx-auto border rounded-full shadow-lg "
-            src="logo_transparent.png"
-            alt="MK Technology"
-          />
+          <Link to={"/"}>
+            <img
+              className="h-24 p-3 mx-auto border rounded-full shadow-lg "
+              src="logo_transparent.png"
+              alt="MK Technology"
+            />
+          </Link>
 
           <h2 className="mt-6 text-3xl font-bold tracking-tight text-center text-gray-900">
             Sign in to your account
