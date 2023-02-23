@@ -7,20 +7,15 @@ import { Link } from "react-router-dom";
 function _header() {
   const isLoggedIn = useSelector((state) => state.users.isLoggedin);
 
-  // const isLoggedIn = useSelector((state) => state.users.isLoggedIn);
-  console.log("Stateus", isLoggedIn);
   return (
     <div className="px-6 pt-6 lg:px-8">
-      <nav className="flex items-center justify-between" aria-label="Global">
+      <nav className="flex items-center justify-between " aria-label="Global">
         <div className="flex lg:flex-1">
-          <Link to={"/"} className="-m-1.5 p-1.5">
-            <span className="sr-only">MK Software Solution</span>
-            <img
-              className="h-32"
-              src="logo_transparent.png"
-              height="250px"
-              alt=""
-            />
+          <Link to={"/"} className="-m-1.5 p-1.5 flex">
+            <img className="h-24" src="logo_transparent.png" alt="MK" />
+            <div className="w-20 py-3 font-bold text-indigo-400 uppercase text-md text-bold">
+              MK Software Solutions
+            </div>
           </Link>
         </div>
         <div className="flex lg:hidden">
@@ -50,28 +45,28 @@ function _header() {
         <div className="hidden lg:flex lg:gap-x-12">
           <Link
             to={"/projects"}
-            className="text-sm font-semibold leading-6 text-gray-900"
+            className="p-3 text-sm font-semibold leading-6 text-indigo-900 rounded hover:bg-indigo-200"
           >
             Our Projects
           </Link>
 
           <Link
             to={"/team"}
-            className="text-sm font-semibold leading-6 text-gray-900"
+            className="p-3 text-sm font-semibold leading-6 text-gray-900 text-indigo-900 rounded hover:bg-indigo-200"
           >
             Team
           </Link>
 
           <Link
             to={"#"}
-            className="text-sm font-semibold leading-6 text-gray-900"
+            className="p-3 text-sm font-semibold leading-6 text-gray-900 text-indigo-900 rounded hover:bg-indigo-200"
           >
             Marketplace
           </Link>
 
           <Link
             to={"#"}
-            className="text-sm font-semibold leading-6 text-gray-900"
+            className="p-3 text-sm font-semibold leading-6 text-gray-900 text-indigo-900 rounded hover:bg-indigo-200"
           >
             Company
           </Link>
