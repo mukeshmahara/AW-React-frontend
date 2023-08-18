@@ -53,7 +53,7 @@ export default userReducer;
 export const userLogin = (credentials, navigate) => async (dispatch) => {
   try {
     let response = await fetchWrapper.post("auth/signin/", credentials);
-    setToken(response.data.attributes.token, null, null);
+    setToken(response.token, null, null);
     dispatch(setUserLogin({ isLoggedin: true }));
     dispatch(setUser({ data: response.data.attributes }));
     navigate("/admin");
