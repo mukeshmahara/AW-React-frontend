@@ -1,9 +1,9 @@
 /* eslint-disable no-undef */
-import { toast } from 'react-toastify';
-import { fetchWrapper } from './fetchWrapper';
+import { toast, ToastContainer } from "react-toastify";
+import { fetchWrapper } from "./fetchWrapper";
 
 export const fileUploader = async (files, fileType) => {
-  console.log(fileType, 'fileType');
+  console.log(fileType, "fileType");
   try {
     let formData = new FormData();
     let ids = [];
@@ -11,12 +11,13 @@ export const fileUploader = async (files, fileType) => {
     let response;
     for (const key of Object.keys(files)) {
       // let type = null;
-      let fileExt = files[key].name.split('.')[files[key].name.split('.').length - 1];
-      console.log('Checking file extension', fileExt);
+      let fileExt =
+        files[key].name.split(".")[files[key].name.split(".").length - 1];
+      console.log("Checking file extension", fileExt);
 
-      formData.append('filename', files[key].name.split('.')[0]);
-      formData.append('file', files[key]);
-      response = await fetchWrapper.post('/media-upload/', formData, true);
+      formData.append("filename", files[key].name.split(".")[0]);
+      formData.append("file", files[key]);
+      response = await fetchWrapper.post("/media-upload/", formData, true);
       ids.push(response.data.id);
       data = response.data;
     }
@@ -30,23 +31,25 @@ export function isEmpty(obj) {
 }
 
 export const ErrorMessageHandler = (error) => {
-  toast.error(error.error)
   let errorObject = error?.error;
+  console.log(error);
+  toast.error(errorObject);
+
   if (error.status === 500) {
     return toast.error(error.statusText);
   }
 
   if (errorObject) {
-    // toast.error(errorObject);
-    // if (Array.isArray(errorObject)) {
-    //   errorObject.map((err) => {
-    //     return toast.error(err);
-    //   });
-    // } else {
-    //   Object.keys(errorObject).map((errorKey) => {
-    //     return toast.error(errorObject[errorKey][0]);
-    //   });
-    // }
+    toast.error(errorObject);
+    if (Array.isArray(errorObject)) {
+      errorObject.map((err) => {
+        return toast.error(err);
+      });
+    } else {
+      Object.keys(errorObject).map((errorKey) => {
+        return toast.error(errorObject[errorKey][0]);
+      });
+    }
   }
 };
 
@@ -79,7 +82,7 @@ export function getDates(startDate, stopDate) {
 }
 
 export function standardTimeConverter(time) {
-  time = time.split(':'); // convert to array
+  time = time.split(":"); // convert to array
 
   var hours = Number(time[0]);
   var minutes = Number(time[1]);
@@ -88,25 +91,25 @@ export function standardTimeConverter(time) {
   var timeValue;
 
   if (hours > 0 && hours <= 12) {
-    timeValue = '' + hours;
+    timeValue = "" + hours;
   } else if (hours > 12) {
-    timeValue = '' + (hours - 12);
+    timeValue = "" + (hours - 12);
   } else if (hours == 0) {
-    timeValue = '12';
+    timeValue = "12";
   }
 
-  timeValue += minutes < 10 ? ':0' + minutes : ':' + minutes; // get minutes
-  timeValue += hours >= 12 ? ' P.M.' : ' A.M.'; // get AM/PM
+  timeValue += minutes < 10 ? ":0" + minutes : ":" + minutes; // get minutes
+  timeValue += hours >= 12 ? " P.M." : " A.M."; // get AM/PM
 
   // show
   return timeValue;
 }
 
 export function isAdmins(role) {
-  if (role === 'participant' || role === 'resource_person') {
+  if (role === "participant" || role === "resource_person") {
     return false;
   }
-  if (role === 'cd_admin' || role === 'superuser' || role === 'executive') {
+  if (role === "cd_admin" || role === "superuser" || role === "executive") {
     return true;
   }
 }
@@ -123,9 +126,9 @@ export function paramsGenerator({
   organizer,
   thematicAreas,
   targetedProvinces,
-  sectors
+  sectors,
 }) {
-  let params = '';
+  let params = "";
   if (pageSize) {
     params += `&limit=${pageSize}`;
   }
@@ -144,22 +147,22 @@ export function paramsGenerator({
     params += `&type=${eventState.value}`;
   }
   if (isMtot) {
-    params += '&mtot=true';
+    params += "&mtot=true";
   }
   if (isPhysical) {
-    params += '&nature=physical';
+    params += "&nature=physical";
   }
   if (isVirtual) {
-    params += '&nature=online';
+    params += "&nature=online";
   }
-  if (eventType && eventType !== 'clear') {
+  if (eventType && eventType !== "clear") {
     params += `&program_type=${eventType}`;
   }
   if (targetedProvinces && targetedProvinces.length > 0) {
-    let provincesIdparams = '&provinces=';
+    let provincesIdparams = "&provinces=";
     targetedProvinces.forEach((province, i) => {
       if (i + 1 < targetedProvinces.length) {
-        provincesIdparams += province.id + '-';
+        provincesIdparams += province.id + "-";
       } else {
         provincesIdparams += province.id;
       }
@@ -167,10 +170,10 @@ export function paramsGenerator({
     params += provincesIdparams;
   }
   if (thematicAreas.length > 0) {
-    let thematicAreaParams = '&thematic_areas=';
+    let thematicAreaParams = "&thematic_areas=";
     thematicAreas.forEach((area, i) => {
       if (i + 1 < thematicAreas.length) {
-        thematicAreaParams += area.id + '-';
+        thematicAreaParams += area.id + "-";
       } else {
         thematicAreaParams += area.id;
       }
@@ -181,10 +184,10 @@ export function paramsGenerator({
     params += `&office_type=${organizer.title}`;
   }
   if (sectors?.length > 0) {
-    let sectorParams = '&sectors=';
+    let sectorParams = "&sectors=";
     sectors.forEach((sector, i) => {
       if (i + 1 < sectors.length) {
-        sectorParams += sector.id + '-';
+        sectorParams += sector.id + "-";
       } else {
         sectorParams += sector.id;
       }
@@ -196,19 +199,19 @@ export function paramsGenerator({
 
 export function onlyAlphaCharacter(text) {
   const regex = /^[a-zA-Z ]*$/;
-  let output = '';
+  let output = "";
 
   for (let i = 0; i < text.length; i++) {
-    output += text[i].match(regex) ? text[i] : '';
+    output += text[i].match(regex) ? text[i] : "";
   }
 
   return output;
 }
 export function fiscalYearFormat(text) {
   const regex = /^[0-9]$/;
-  let output = '';
+  let output = "";
   for (let i = 0; i < text.length; i++) {
-    output += text[i].match(regex) ? text[i] : '';
+    output += text[i].match(regex) ? text[i] : "";
   }
 
   return output;
@@ -224,9 +227,9 @@ export function isNumeric(number) {
 }
 
 export function convertToNumber(text) {
-  let output = '';
+  let output = "";
   for (let i = 0; i < text.length; i++) {
-    output += isNumeric(text[i]) ? text[i] : '';
+    output += isNumeric(text[i]) ? text[i] : "";
   }
   return output;
 }
@@ -242,9 +245,9 @@ export const mediaUrlify = (url) => {
 };
 
 export function toNepaliNumber(number) {
-  const nepaliNumbers = ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९'];
+  const nepaliNumbers = ["०", "१", "२", "३", "४", "५", "६", "७", "८", "९"];
   const strNum = String(number);
-  let strNepNum = '';
+  let strNepNum = "";
   for (let i = 0; i < strNum.length; i++) {
     strNepNum += nepaliNumbers[parseInt(strNum.substr(i, 1))];
   }

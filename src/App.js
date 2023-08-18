@@ -7,15 +7,18 @@ import Project from "./components/project/Project";
 
 import { Suspense } from "react";
 import Layout from "./layouts/Layout";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { useSelector } from "react-redux";
 import admin from "./routes/admin";
 import PrivateRoute from "./routes/PrivateRoute";
+import NotFound from "./components/NotFound";
+import Team from "./components/team/Team";
 
 function App() {
   const isLoggedIn = useSelector((state) => state.users.isLoggedin);
   console.log(isLoggedIn, "login");
   const user = useSelector((state) => state.users.user);
+
   return (
     <BrowserRouter>
       <Suspense fallback="Loading...">
@@ -37,6 +40,8 @@ function App() {
           >
             {admin}
           </Route>
+          <Route path="/team" element={<Team />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
         {/* <ToastContainer
           position="top-right"
@@ -49,8 +54,8 @@ function App() {
           draggable
           pauseOnHover
         /> */}
-        <ToastContainer autoClose={2000} position="bottom-right" />
       </Suspense>
+      <ToastContainer autoClose={2000} position="bottom-right" />
     </BrowserRouter>
   );
 }
