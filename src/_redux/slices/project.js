@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchWrapper } from "../../_helper/fetchWrapper";
+import { data } from "autoprefixer";
 
 export const initialState = {
   loading: false,
@@ -44,4 +45,14 @@ export const fetchProjects = (url) =>async(dispatch)=>{
 
 export const getProjectById = (project) =>async(dispatch)=>{
 
+}
+
+export const searchedProject = (url ,project) => async(dispatch)=>{
+  try {
+    const response = await fetchWrapper.get(url);
+    dispatch(getProjects({ projects: response.data, totalCount: response.data.length}))
+    
+  } catch (error) {
+    console.log(error); 
+  }
 }

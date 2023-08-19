@@ -5,59 +5,64 @@ import { userLogout } from "../../_redux/slices/user";
 import sidebarData from "./sidebarData";
 
 function SideBar() {
-  const [active, setActive] = useState("Dashboard");
-  const navigate = useNavigate();
-  
-  const handleClick = (item) => {
-    setActive(item.name);
-  };
+	const [active, setActive] = useState("Dashboard");
+	const navigate = useNavigate();
 
-  const dispatch = useDispatch();
-  const handleLogout = () => {
-    dispatch(userLogout(navigate));
-  };
+	const handleClick = (item) => {
+		setActive(item.name);
+	};
 
-  return (
-    <div className="shadow-lg ">
-      <div className="flex items-center mb-4">
-        <img
-          src="logo_transparent.png"
-          className="rounded-full card"
-          alt="logo"
-        />
-      </div>
-      <hr />
-      <div className="max-h-screen p-5 overflow-auto ">
-        {sidebarData.map((item) => {
-          return (
-            <NavLink
-              key={item.id}
-              to={item.link}
-              className={
-                active === item.name
-                  ? "font-bold text-indigo-900 decoration-sky-500"
-                  : ""
-              }
-              onClick={() => handleClick(item)}
-            >
-              <div className="grid grid-cols-4 mt-4 ">
-                {item.icon}
-                <p className="object-none">{item.name}</p>
-              </div>
-            </NavLink>
-          );
-        })}
-        <div className="my-5 text-center">
-          <button
-            className="bg-red-500 rounded-pill button "
-            onClick={handleLogout}
-          >
-            logout
-          </button>
-        </div>
-      </div>
-    </div>
-  );
+	const dispatch = useDispatch();
+	const handleLogout = () => {
+		dispatch(userLogout(navigate));
+	};
+
+	return (
+		<div className="shadow-lg h-full">
+			<div className="flex items-center">
+				<div className="p-4 text-right">
+					<img
+						src="logo_transparent.png"
+						alt="Image"
+						className="border animate-bounce object-fill h-16 shadow-lg rounded-full"
+					/>
+				</div>
+				<div className="flex-1 p-4">
+					<b className="text-lg text-indigo-500">Admin Panel</b>
+				</div>
+			</div>
+			<hr />
+			<div className="max-h-screen item-center overflow-auto ">
+				{sidebarData.map((item) => {
+					return (
+						<NavLink
+							key={item.id}
+							to={item.link}
+							className={
+								active === item.name
+									? "font-bold text-indigo-900 scale-x-150 decoration-sky-500"
+									: ""
+							}
+							onClick={() => handleClick(item)}
+						>
+							<div className="grid grid-cols-4 m-4 mt-4 ">
+								{item.icon}
+								<p className="object-none">{item.name}</p>
+							</div>
+						</NavLink>
+					);
+				})}
+			</div>
+				<div className="flex flex-col items-end absolute bottom-0">
+					<button
+						className="rounded button "
+						onClick={handleLogout}
+					>
+						logout
+					</button>
+				</div>
+		</div>
+	);
 }
 
 export default SideBar;
