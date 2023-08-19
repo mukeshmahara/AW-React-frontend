@@ -13,6 +13,7 @@ import admin from "./routes/admin";
 import PrivateRoute from "./routes/PrivateRoute";
 import NotFound from "./components/NotFound";
 import Team from "./components/team/Team";
+import NewProject from "./components/project/NewProject";
 
 function App() {
   const isLoggedIn = useSelector((state) => state.users.isLoggedin);
@@ -23,8 +24,12 @@ function App() {
     <BrowserRouter>
       <Suspense fallback="Loading...">
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="projects" element={<Project />} />
+          <Route  path="/" element={<Home />} />
+          <Route  path="projects" element={<Project />}>
+            <Route path="new_projects" element={<NewProject />} />
+
+          </Route>
+
           <Route
             path="/login"
             element={isLoggedIn ? <Navigate to={"/admin"} /> : <Login />}

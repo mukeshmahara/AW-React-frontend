@@ -2,13 +2,10 @@ import React, { useEffect } from "react";
 import { AiFillCopyrightCircle, AiOutlinePlus } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { fetchWrapper } from "../../_helper/fetchWrapper";
-import { ErrorMessageHandler } from "../../_helper/_methods";
 import { fetchProjects } from "../../_redux/slices/project";
 import SearchBox from "../Reusables/SearchBox";
 import { searchedProject } from "../../_redux/slices/project";
 import Title from "../Reusables/Title";
-import ProjectSkeleton from "./skeleton/ProjectSkeleton";
 import { MdOutlineSettings } from "react-icons/md";
 
 function Project() {
@@ -28,12 +25,15 @@ function Project() {
 
 	const projects = useSelector((state) => state.projects.projects.projects);
 
-	
 	const searchProject = (searchParams) => {
-		const getProjects = (value) =>{
-			dispatch(searchedProject(`projects/?description=${value} `))
-		}
+		const getProjects = (value) => {
+			dispatch(searchedProject(`projects/?description=${value} `));
+		};
 		getProjects(searchParams.target.value);
+	};
+
+	const handleNewProject = () => {
+		navigate("new_projects");
 	};
 
 	return (
@@ -51,6 +51,7 @@ function Project() {
 					<button
 						type="button"
 						className="mx-4 text-indigo-100 bg-green-700 border rounded hover:text-indigo-50 hover:bg-green-800 focus:border-indigo-50 focus:ring-1 focus:outline-none"
+						onClick={handleNewProject}
 					>
 						<AiOutlinePlus size={48} className="" />
 					</button>
@@ -79,7 +80,10 @@ function Project() {
 								</div>
 								<img
 									src={
-										process.env.REACT_APP_BACKEND_DOMAIN_URL + item?.attributes?.thumbnail || "https://tailwindui.com/img/component-images/dark-project-app-screenshot.png" 
+										process.env
+											.REACT_APP_BACKEND_DOMAIN_URL +
+											item?.attributes?.thumbnail ||
+										"https://tailwindui.com/img/component-images/dark-project-app-screenshot.png"
 									}
 									className="bg-red-900 rounded shadow-lg"
 								/>
